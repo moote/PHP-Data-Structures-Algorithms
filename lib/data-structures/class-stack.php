@@ -21,8 +21,10 @@ class Stack
 
     /**
      * Class constructor
+     * 
+     * @param int $stackSize The size of the stack
      */
-    public function __construct($stackSize)
+    public function __construct(int $stackSize)
     {
         $this->stackSize = $stackSize;
         $this->internalArray = [];
@@ -38,7 +40,7 @@ class Stack
      */
     public function push($value)
     {
-        if(count($this->internalArray) >= $this->stackSize){
+        if($this->isFull()){
             throw new Exception("Stack full", __LINE__);
         }
         elseif(!is_int($value) && !is_string($value)){
@@ -60,11 +62,27 @@ class Stack
      */
     public function pop()
     {
-        if(count($this->internalArray) === 0){
+        if($this->count() === 0){
             throw new Exception("Stack empty", __LINE__);
         }
         else{
             return array_pop($this->internalArray);
         }
+    }
+
+    public function getSize() {
+        return $this->stackSize;
+    }
+
+    public function count() {
+        return count($this->internalArray);
+    }
+
+    public function isEmpty() {
+        return $this->count() === 0;
+    }
+
+    public function isFull() {
+        return $this->count() >= $this->getSize();
     }
 }
